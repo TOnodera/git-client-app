@@ -11,7 +11,7 @@ pub type GitBranchUsecaseOutput = Result<Vec<u8>>;
 
 impl<T: GitBranchCommandTrait> GitBranchUsecase<T>{
     pub fn run(&self, input: Option<impl GitBranchCommandInputTrait>, option: Option<impl GitBranchCommandOptionTrait>) -> GitBranchUsecaseOutput{
-        self.command.execute(input, option)?;
+        let command_output = self.command.execute(input, option)?;
         todo!()
     }
 }
