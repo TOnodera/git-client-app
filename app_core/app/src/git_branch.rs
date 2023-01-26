@@ -1,17 +1,14 @@
-use domain::{command::command::{GitBranchCommandTrait, GitBranchCommandInputTrait, GitBranchCommandOptionTrait, GitBranchCommandOutput}, types::Result};
+use domain::{command::command::{GitBranchCommandTrait, GitBranchCommandInputTrait, GitBranchCommandOptionTrait }, types::Result, service::GitBranchServiceTrait, value::Branch};
 
-
-
-pub struct GitBranchUsecase<T: GitBranchCommandTrait>
+pub struct GitBranchUsecase<T: GitBranchCommandTrait, I: GitBranchServiceTrait>
 {
-    command: T 
+    command: T,
+    service: I
 }
 
-pub type GitBranchUsecaseOutput = Result<Vec<u8>>;
-
-impl<T: GitBranchCommandTrait> GitBranchUsecase<T>{
-    pub fn run(&self, input: Option<impl GitBranchCommandInputTrait>, option: Option<impl GitBranchCommandOptionTrait>) -> GitBranchUsecaseOutput{
+impl<T: GitBranchCommandTrait, I: GitBranchServiceTrait> GitBranchUsecase<T, I>{
+    pub fn run(&self, input: Option<impl GitBranchCommandInputTrait>, option: Option<impl GitBranchCommandOptionTrait>) -> Result<Vec<Branch>>{
         let command_output = self.command.execute(input, option)?;
-        todo!()
+        self.service.parse(&command_output)
     }
 }

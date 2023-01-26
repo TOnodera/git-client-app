@@ -1,12 +1,12 @@
-use domain::{types::Result, value::Branch};
+use domain::{types::Result, value::Branch, service::GitBranchServiceTrait};
 use regex::Regex;
 
 pub struct GitBranchCommandService;
-impl GitBranchCommandService {
-    pub fn new()-> Self {
+impl GitBranchServiceTrait for GitBranchCommandService {
+    fn new()-> Self {
         Self
     }
-    pub fn parse(input: Vec<u8>) -> Result<Vec<Branch>> {
+    fn parse(&self, input: &Vec<u8>) -> Result<Vec<Branch>> {
         let output = std::str::from_utf8(&input)?;
         let re = Regex::new(r"^\*?\s+(.+?)\s+(\w+?)\s+(.+)$")?;
         let mut result = Vec::<Branch>::new();
