@@ -60,10 +60,10 @@ impl GitLogServiceTrait for GitLogCommandService {
                     None
                 };
 
-                let commit_date = DateTime::parse_from_rfc2822(&captures[8])?.with_timezone(&Utc);
+                let commit_date = DateTime::parse_from_rfc2822(&captures[9])?.with_timezone(&Utc);
 
-                let comment = if &captures[9] != "" {
-                    Some(captures[9].to_string())
+                let comment = if &captures[10] != "" {
+                    Some(captures[10].to_string())
                 } else {
                     None
                 };
