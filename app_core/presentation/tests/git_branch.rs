@@ -1,6 +1,6 @@
 use app::git_branch::GitBranchUsecase;
 use domain::{
-    command::git_branch::{GitBranchCommandInput, GitBranchCommandOption, GitBranchCommandTrait},
+    command::git_branch::{GitBranchCommandOption, GitBranchCommandTrait},
     service::git_branch::GitBranchServiceTrait,
     types::Result,
 };
@@ -14,10 +14,7 @@ fn git_branchコマンドを実行してBranchオブジェクトの配列を取�
     let command = GitBranchCommandNormalFixture::new();
     let service = GitBranchCommandService::new();
     let usecase = GitBranchUsecase::new(command, service);
-    let result = usecase.run(
-        None::<GitBranchCommandInput>,
-        None::<GitBranchCommandOption>,
-    )?;
+    let result = usecase.run(GitBranchCommandOption::new("git_dir"))?;
     let main = result.get(0).unwrap();
     assert_eq!(main.is_current, false);
     assert_eq!(main.name, "main");

@@ -1,35 +1,24 @@
 use domain::{
-    command::git_branch::{
-        GitBranchCommandInputTrait, GitBranchCommandOptionTrait, GitBranchCommandOutput,
-        GitBranchCommandTrait,
-    },
+    command::git_branch::{GitBranchCommandOption, GitBranchCommandOutput, GitBranchCommandTrait},
     error::AppError,
-    types::Result,
 };
 struct GitBranchCommand;
 impl GitBranchCommandTrait for GitBranchCommand {
     fn new() -> Self {
         Self
     }
-    fn execute(
-        &self,
-        input: Option<impl GitBranchCommandInputTrait>,
-        option: Option<impl GitBranchCommandOptionTrait>,
-    ) -> GitBranchCommandOutput {
-        /*
+    fn execute(&self, option: GitBranchCommandOption) -> GitBranchCommandOutput {
         // git branch実行
         let result = std::process::Command::new("git")
-            .arg(format!("--git-dir={}",))
+            .arg(format!("--git-dir={}", &option.git_dir))
             .arg("branch")
             .arg("-v")
             .output()?;
         // エラーの場合は早期リターン
         if !result.status.success() {
-            return Err(Box::new(AppError::CommandError));
+            return Err(Box::new(AppError::GitBranchCommandError));
         }
         // コマンド出力を返す
         Ok(result.stdout)
-        */
-        todo!()
     }
 }
