@@ -14,6 +14,7 @@ impl GitLogCommandTrait for GitLogCommand {
             .arg(format!("{}", &option.hash))
             .arg("log")
             .arg("--pretty=format:'%H %T %P [%an] %ae [%ad] [%cn] %ce [%cd] [%s]'")
+            .arg("--date=rfc")
             .output()?;
         // エラーの場合は早期リターン
         if !result.status.success() {

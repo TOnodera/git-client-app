@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use chrono::serde::ts_seconds::deserialize as from_ts;
 use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
 
 // コミットハッシュオブジェクト
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -30,6 +30,33 @@ pub struct CommitInfo {
     #[serde(deserialize_with = "from_ts")]
     commit_date: DateTime<Utc>,
     comment: Option<String>,
+}
+impl CommitInfo {
+    pub fn new(
+        commit_hash: Option<String>,
+        tree_hash: Option<String>,
+        parent_hash: Option<String>,
+        author_name: Option<String>,
+        author_email: Option<String>,
+        author_date: DateTime<Utc>,
+        committer_name: Option<String>,
+        committer_email: Option<String>,
+        commit_date: DateTime<Utc>,
+        comment: Option<String>,
+    ) -> Self {
+        Self {
+            commit_hash,
+            tree_hash,
+            parent_hash,
+            author_name,
+            author_email,
+            author_date,
+            committer_name,
+            committer_email,
+            commit_date,
+            comment,
+        }
+    }
 }
 
 // ブランチオブジェクト
