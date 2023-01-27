@@ -1,11 +1,17 @@
-use domain::command::command::{GitBranchCommandTrait, GitBranchCommandInputTrait, GitBranchCommandOutput};
+use domain::command::git_branch::{
+    GitBranchCommandInputTrait, GitBranchCommandOutput, GitBranchCommandTrait,
+};
 
 pub struct GitBranchCommandNormalFixture;
-impl GitBranchCommandTrait for GitBranchCommandNormalFixture{
+impl GitBranchCommandTrait for GitBranchCommandNormalFixture {
     fn new() -> Self {
         Self
     }
-    fn execute(&self, input: Option<impl GitBranchCommandInputTrait>, option: Option<impl domain::command::command::GitBranchCommandOptionTrait>) -> GitBranchCommandOutput {
+    fn execute(
+        &self,
+        input: Option<impl GitBranchCommandInputTrait>,
+        option: Option<impl domain::command::git_branch::GitBranchCommandOptionTrait>,
+    ) -> GitBranchCommandOutput {
         let output = r#"
   main            0d65e2eb24259c418682d723cd547b39fcb6e0d1 comment
   feature/branch1 0d65e2eb24259c418682d723cd547b39fcb6e0d2 comment 
