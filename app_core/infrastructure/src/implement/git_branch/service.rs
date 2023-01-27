@@ -1,9 +1,9 @@
-use domain::{types::Result, value::Branch, service::GitBranchServiceTrait};
+use domain::{service::git_branch::GitBranchServiceTrait, types::Result, value::Branch};
 use regex::Regex;
 
 pub struct GitBranchCommandService;
 impl GitBranchServiceTrait for GitBranchCommandService {
-    fn new()-> Self {
+    fn new() -> Self {
         Self
     }
     fn parse(&self, input: &Vec<u8>) -> Result<Vec<Branch>> {

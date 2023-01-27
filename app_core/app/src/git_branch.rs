@@ -2,9 +2,8 @@ use domain::{
     command::git_branch::{
         GitBranchCommandInputTrait, GitBranchCommandOptionTrait, GitBranchCommandTrait,
     },
-    service::GitBranchServiceTrait,
     types::Result,
-    value::Branch,
+    value::Branch, service::git_branch::GitBranchServiceTrait,
 };
 
 pub struct GitBranchUsecase<T: GitBranchCommandTrait, I: GitBranchServiceTrait> {

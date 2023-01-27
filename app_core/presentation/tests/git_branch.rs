@@ -1,7 +1,7 @@
 use app::git_branch::GitBranchUsecase;
 use domain::{
     command::git_branch::{GitBranchCommandInput, GitBranchCommandOption, GitBranchCommandTrait},
-    service::GitBranchServiceTrait,
+    service::git_branch::GitBranchServiceTrait,
     types::Result,
 };
 use fixture::git_branch_fixture::GitBranchCommandNormalFixture;
