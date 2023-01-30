@@ -1,6 +1,7 @@
 use domain::{
     command::git_log::{GitLogCommandOption, GitLogCommandOutput, GitLogCommandTrait},
     error::AppError,
+    error::CommandError,
 };
 struct GitLogCommand;
 impl GitLogCommandTrait for GitLogCommand {
@@ -18,7 +19,9 @@ impl GitLogCommandTrait for GitLogCommand {
             .output()?;
         // エラーの場合は早期リターン
         if !result.status.success() {
-            return Err(Box::new(AppError::GitBranchCommandError));
+            return Err(Box::new(AppError::CommandError(
+                CommandError::GitLogCommandError,
+            )));
         }
 
         Ok(result.stdout)

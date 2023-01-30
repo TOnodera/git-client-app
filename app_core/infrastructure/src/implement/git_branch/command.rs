@@ -1,6 +1,6 @@
 use domain::{
     command::git_branch::{GitBranchCommandOption, GitBranchCommandOutput, GitBranchCommandTrait},
-    error::AppError,
+    error::{AppError, CommandError},
 };
 struct GitBranchCommand;
 impl GitBranchCommandTrait for GitBranchCommand {
@@ -16,7 +16,9 @@ impl GitBranchCommandTrait for GitBranchCommand {
             .output()?;
         // エラーの場合は早期リターン
         if !result.status.success() {
-            return Err(Box::new(AppError::GitBranchCommandError));
+            return Err(Box::new(AppError::CommandError(
+                CommandError::GitBranchCommandError,
+            )));
         }
         // コマンド出力を返す
         Ok(result.stdout)
