@@ -19,9 +19,7 @@ impl GitLogCommandTrait for GitLogCommand {
             .output()?;
         // エラーの場合は早期リターン
         if !result.status.success() {
-            return Err(Box::new(AppError::CommandError(
-                CommandError::GitLogCommandError,
-            )));
+            return Err(AppError::CommandError(CommandError::GitLogCommandError).into());
         }
 
         Ok(result.stdout)

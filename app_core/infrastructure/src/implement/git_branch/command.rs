@@ -16,9 +16,7 @@ impl GitBranchCommandTrait for GitBranchCommand {
             .output()?;
         // エラーの場合は早期リターン
         if !result.status.success() {
-            return Err(Box::new(AppError::CommandError(
-                CommandError::GitBranchCommandError,
-            )));
+            return Err(AppError::CommandError(CommandError::GitBranchCommandError).into());
         }
         // コマンド出力を返す
         Ok(result.stdout)
