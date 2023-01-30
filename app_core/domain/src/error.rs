@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-#[derive(Error, Debug)]
+#[derive(Error, Debug, PartialEq)]
 pub enum AppError {
     #[error("コマンドエラー")]
     CommandError(CommandError),
@@ -9,7 +9,7 @@ pub enum AppError {
     DomainError(DomainError),
 }
 
-#[derive(Error, Debug)]
+#[derive(Error, Debug, PartialEq)]
 pub enum CommandError {
     #[error("git branchコマンドの実行中にエラーが発生しました")]
     GitBranchCommandError,
@@ -18,7 +18,7 @@ pub enum CommandError {
     GitLogCommandError,
 }
 
-#[derive(Error, Debug)]
+#[derive(Error, Debug, PartialEq)]
 pub enum DomainError {
     #[error("バリデーションエラー")]
     ValidationError,

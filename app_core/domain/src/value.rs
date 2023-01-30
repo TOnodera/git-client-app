@@ -1,8 +1,9 @@
+use crate::error::DomainError;
+use crate::types::Result;
+use anyhow::anyhow;
 use chrono::serde::ts_seconds::deserialize as from_ts;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-
-use crate::types::Result;
 
 // コミットハッシュオブジェクト
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -76,7 +77,9 @@ impl CommitInfo {
             None
         };
 
-        // TODO 値ない場合はドメインエラーとする
+        if author_date.is_empty() {
+            return Err(anyhow!(DomainError::ValidationError));
+        }
         let author_date = DateTime::parse_from_rfc2822(author_date)?.with_timezone(&Utc);
 
         let committer_name = if committer_name != "" {
@@ -91,6 +94,9 @@ impl CommitInfo {
             None
         };
 
+        if commit_date.is_empty() {
+            return Err(anyhow!(DomainError::ValidationError));
+        }
         let commit_date = DateTime::parse_from_rfc2822(commit_date)?.with_timezone(&Utc);
 
         let comment = if comment != "" {
