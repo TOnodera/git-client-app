@@ -9,7 +9,9 @@ use domain::{
     types::Result,
     value::CommitInfo,
 };
-use fixture::git_log_fixture::{GitLogCommandErrorFixture1, GitLogCommandNormalFixture};
+use fixture::git_log_fixture::{
+    GitLogCommandErrorFixture1, GitLogCommandErrorFixture2, GitLogCommandNormalFixture,
+};
 use infrastructure::implement::git_log::service::GitLogCommandService;
 #[test]
 fn 指定したhashから遡れるコミットをすべて取得できる() -> Result<()> {
@@ -56,11 +58,11 @@ fn 指定したhashから遡れるコミットをすべて取得できる() -> R
 
 #[test]
 fn author_dateとcommit_dateは入力必須とする() -> Result<()> {
+    // author_dateがない場合
     let command = GitLogCommandErrorFixture1::new();
     let service = GitLogCommandService::new();
     let usecase = GitLogUsecase::new(command, service);
     let results = usecase.run(GitLogCommandOption::new("git_dir", "hash", 0));
-
     match results {
         Ok(_) => assert!(false),
         Err(err) => {
@@ -68,6 +70,20 @@ fn author_dateとcommit_dateは入力必須とする() -> Result<()> {
             assert_eq!(exp.unwrap(), DomainError::ValidationError);
         }
     }
+
+    // commit_dateがない場合
+    let command = GitLogCommandErrorFixture2::new();
+    let service = GitLogCommandService::new();
+    let usecase = GitLogUsecase::new(command, service);
+    let results = usecase.run(GitLogCommandOption::new("git_dir", "hash", 0));
+    match results {
+        Ok(_) => assert!(false),
+        Err(err) => {
+            let exp = err.downcast::<DomainError>();
+            assert_eq!(exp.unwrap(), DomainError::ValidationError);
+        }
+    }
+
     Ok(())
 }
 
