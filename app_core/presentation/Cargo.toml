@@ -9,3 +9,4 @@ edition = "2021"
 infrastructure = { path = "../infrastructure" }
 domain = { path = "../domain" }
 app = { path = "../app" }
+chrono = { version="0.4.23", features = ["serde"] }

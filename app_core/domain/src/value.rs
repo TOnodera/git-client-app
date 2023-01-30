@@ -16,7 +16,7 @@ impl CommitHash {
 }
 
 // コミット情報オブジェクト
-#[derive(Debug, Deserialize, Serialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq)]
 pub struct CommitInfo {
     commit_hash: Option<String>,
     tree_hash: Option<String>,
