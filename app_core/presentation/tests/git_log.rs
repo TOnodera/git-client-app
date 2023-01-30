@@ -10,7 +10,8 @@ use domain::{
     value::CommitInfo,
 };
 use fixture::git_log_fixture::{
-    GitLogCommandErrorFixture1, GitLogCommandErrorFixture2, GitLogCommandNormalFixture,
+    GitLogCommandErrorFixture1, GitLogCommandErrorFixture2, GitLogCommandErrorFixture3,
+    GitLogCommandNormalFixture,
 };
 use infrastructure::implement::git_log::service::GitLogCommandService;
 #[test]
@@ -66,8 +67,8 @@ fn author_dateとcommit_dateは入力必須とする() -> Result<()> {
     match results {
         Ok(_) => assert!(false),
         Err(err) => {
-            let exp = err.downcast::<DomainError>();
-            assert_eq!(exp.unwrap(), DomainError::ValidationError);
+            let exp = err.downcast::<DomainError>()?;
+            assert_eq!(exp, DomainError::ValidationError);
         }
     }
 
@@ -79,8 +80,21 @@ fn author_dateとcommit_dateは入力必須とする() -> Result<()> {
     match results {
         Ok(_) => assert!(false),
         Err(err) => {
-            let exp = err.downcast::<DomainError>();
-            assert_eq!(exp.unwrap(), DomainError::ValidationError);
+            let exp = err.downcast::<DomainError>()?;
+            assert_eq!(exp, DomainError::ValidationError);
+        }
+    }
+
+    // 両方ない場合
+    let command = GitLogCommandErrorFixture3::new();
+    let service = GitLogCommandService::new();
+    let usecase = GitLogUsecase::new(command, service);
+    let results = usecase.run(GitLogCommandOption::new("git_dir", "hash", 0));
+    match results {
+        Ok(_) => assert!(false),
+        Err(err) => {
+            let exp = err.downcast::<DomainError>()?;
+            assert_eq!(exp, DomainError::ValidationError);
         }
     }
 
