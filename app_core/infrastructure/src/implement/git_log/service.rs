@@ -16,70 +16,18 @@ impl GitLogServiceTrait for GitLogCommandService {
         let mut result = Vec::<CommitInfo>::new();
         for line in output.lines() {
             if let Some(captures) = re.captures(line) {
-                let commit_hash = if &captures[1] != "" {
-                    Some(captures[1].to_string())
-                } else {
-                    None
-                };
-
-                let tree_hash = if &captures[2] != "" {
-                    Some(captures[2].to_string())
-                } else {
-                    None
-                };
-
-                let parent_hash = if &captures[3] != "" {
-                    Some(captures[3].to_string())
-                } else {
-                    None
-                };
-
-                let author_name = if &captures[4] != "" {
-                    Some(captures[4].to_string())
-                } else {
-                    None
-                };
-
-                let author_email = if &captures[5] != "" {
-                    Some(captures[5].to_string())
-                } else {
-                    None
-                };
-
-                let author_date = DateTime::parse_from_rfc2822(&captures[6])?.with_timezone(&Utc);
-
-                let committer_name = if &captures[7] != "" {
-                    Some(captures[7].to_string())
-                } else {
-                    None
-                };
-
-                let committer_email = if &captures[8] != "" {
-                    Some(captures[8].to_string())
-                } else {
-                    None
-                };
-
-                let commit_date = DateTime::parse_from_rfc2822(&captures[9])?.with_timezone(&Utc);
-
-                let comment = if &captures[10] != "" {
-                    Some(captures[10].to_string())
-                } else {
-                    None
-                };
-
                 result.push(CommitInfo::new(
-                    commit_hash,
-                    tree_hash,
-                    parent_hash,
-                    author_name,
-                    author_email,
-                    author_date,
-                    committer_name,
-                    committer_email,
-                    commit_date,
-                    comment,
-                ));
+                    &captures[1],
+                    &captures[2],
+                    &captures[3],
+                    &captures[4],
+                    &captures[5],
+                    &captures[6],
+                    &captures[7],
+                    &captures[8],
+                    &captures[9],
+                    &captures[10],
+                )?);
             }
         }
         Ok(result)
