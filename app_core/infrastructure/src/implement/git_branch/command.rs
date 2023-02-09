@@ -2,7 +2,7 @@ use domain::{
     command::git_branch::{GitBranchCommandOption, GitBranchCommandOutput, GitBranchCommandTrait},
     error::{AppError, CommandError},
 };
-struct GitBranchCommand;
+pub struct GitBranchCommand;
 impl GitBranchCommandTrait for GitBranchCommand {
     fn new() -> Self {
         Self
